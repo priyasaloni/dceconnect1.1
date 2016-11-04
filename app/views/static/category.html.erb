@@ -1,0 +1,17 @@
+<h1> Hello, <%= @u.Name %> Choose your Category </h1>
+ <form action="/static/categorys" method="post">
+ 
+    <input type="hidden" name="id" value="<%= @u.id%>">
+    <% i = 0 %>
+    <% @c.each do |a| %>
+        <% i=i+1 %>
+        <input type="checkbox" id="test<%=a%>" name="cid[<%=i%>]" value="<%=a.id %>"/>
+        <label for="test<%=a%>"> <%= a.name %> </label>
+        <br>
+    <% end %>
+      
+  <input type="submit" name="Go" value="Go">
+    
+</form> 
+
+

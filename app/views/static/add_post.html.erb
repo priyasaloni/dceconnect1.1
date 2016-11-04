@@ -1,0 +1,39 @@
+<h1> ADD POST </h1>       
+<div class="container" >
+  <div class="row">
+    <form method="post" action="/static/add_postp" class="col s12">
+    <input type="hidden" name="id" value="<%= @u.id%>">
+      <div class="row">
+        <div class="input-field col s12">   
+          <input id="title" type="text" name="title">  
+          <label for="title"> Title </label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">     
+          <textarea id="desc" class="materialize-textarea" name="content"></textarea>
+          <label for="desc"> Description </label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <select name="cid" >
+            
+            <% @c.each do |a| %>
+              <option value="<%=a.id%>"><%= a.name %></option>
+            <% end %>  
+          </select>
+          <label>Category</label>
+        </div>
+      </div>
+      <br>
+      <br>
+      <br>
+      <button class="btn waves-effect waves-light" type="submit" name="submit" value="Post"> Post
+        <i class="material-icons right"> send </i>
+      </button>
+
+    </form>
+  </div>
+  
+</div>

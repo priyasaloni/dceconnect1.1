@@ -1,0 +1,109 @@
+
+<div class ="container">
+	<div class="jumbotron">
+		<% if user_signed_in? %>
+		<h3>Welcome, <%= current_user.Name %>!</h3>
+		<div class="fixed-action-btn  click-to-toggle">
+    	<a class="btn-floating btn-large red">	
+    		<i class="material-icons">menu</i>
+    	</a>
+    	<ul>
+    		<%@c.each do |p| %>
+					<form method="post" action="/static/category_post" class="col s12">
+						<input type="hidden" name="cid"  value="<%= p.id %>">
+						<input  type="submit" name="save" id="save" value="<%= p.name.chars.first %>" class="btn-floating btn-large red" href="/static/category_post"> </input>
+	   			</form>
+    		<% end%>
+    	</ul>
+		</div>
+        
+		<div  style="flex-wrap: nowrap; text-align: center">
+			<a class="waves-effect waves-light btn-large" href="/static/add_post" data-turbolinks = "false" >
+				<i class="material-icons left">add</i> Add Post
+			</a>
+		</div>
+		<hr>
+		<br>
+
+		<div class="row">
+					<!-- Category View -->
+			<div class =" col s2">
+			<h4> Categories </h4>
+			<ul>
+				<% @cat.each do |c| %>
+				<li><a href="/static/show_category/<%=c.id%>" > <%= c.name %></a></li>
+				<% end %>
+			</ul>
+		</div>
+
+
+<!-- Newsfeed -->
+
+		<div class = "col s8" >
+
+
+				<%@post.reverse.each do |p| %>
+
+				<% if p.category_id == 1%>
+				<% color = "red lighten-3" %>
+				<% elsif p.category_id == 2%>
+				<% color = "pink lighten-3" %>
+				<% elsif p.category_id == 3%>
+				<% color = "blue lighten-3" %>
+				<% elsif p.category_id == 4%>
+				<% color = "green lighten-3" %>
+				<% elsif p.category_id == 5%>
+				<% color = "yellow" %>
+				<% else %>
+				<% color = "teal" %>
+				<%end%>
+
+				<% vote = Upvote.where(:user_id => @user.id , :post_id => p.id) %>
+
+				<div class = "row" style=" flex-wrap: wrap;">
+					<div class = "col s10 offset-s1">
+						<div class="card grey lighten-3">
+							<div class = "row">
+								<img  class = "col s3" src = " <%= User.find(p.user_id).img %> " alt ="user-img" style="height:50px; width:80px">
+								<div class="col s4"> <b> <large> <%= User.find(p.user_id).Name%> </large> </b> <br> <i> <small> <%= (p.created_at).strftime("%-d %b,%l:%M %p") %> </i> </small> </div>
+								<div class="col s5" align="right">
+									<div class="chip <%=color%>" style ="float: right, vertical-align: center"  > <%= Category.find(p.category_id).name%> </div>
+								</div>
+							</div>
+							<div class="card-content">
+								<span class="card-title"> <b> <%= p.title%> </b></span>
+								<p> <%= p.content%> </p> <br> <br> 
+								<form method="post" action="/static/like" name="welc_form">
+									<input type="hidden" name="uid" value="<%= @user.id%>">
+									<input type="hidden" name="cid" value="<%= p.category_id %>">
+									<input type="hidden" name="pid" value="<%= p.id%>">
+									<% if vote.exists? %>
+									<p> <Button type="submit" class="btn waves-effect waves-light grey" onclick="change()" id="myButton1" value="Unlike"><i class="material-icons left">thumb_down</i> Unlike </Button>&nbsp&nbsp&nbsp<%= p.nol %> Likes </p>
+									<% else %>
+									<p> <Button type="submit" class="btn waves-effect waves-light grey darken-2" onclick="change()" id="myButton1" value="Like"><i class="material-icons left">thumb_up</i> Like </Button> &nbsp&nbsp<%= p.nol %> Likes </p>
+									<% end %>
+								</form>
+							</div> 
+
+						</div>
+						<hr>
+					</div>
+				</div>
+				<% end %>
+
+			<% end%>
+
+		</div>
+
+		<!-- Trending -->
+		<div class = "col s2">
+		<h4> Trending </h4>
+			<ul>
+			<% trend = @post_all.order('nol DESC').limit(2) %>
+			<% trend.each do |p| %>
+				<li> <a href = "/static/show_post/<%= p.id %>"> <%= p.title %> </a></li>
+			<%end%>
+			</ul>
+
+		</div>
+	</div>

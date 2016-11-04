@@ -1,0 +1,79 @@
+<div class="jumbotron">
+  <% if user_signed_in? %>
+    <h3>Welcome back, <%= current_user.Name %>!</h3>
+    <p class="lead">
+      You have signed in!  If this were a real app some sweet conent
+      would go here.  But it's just a test.  You might want to sign out now.
+    </p>
+    <%= link_to "Sign Out", destroy_user_session_path, :method => :delete, :class => 'btn btn-large btn-danger' %>
+  <% else %>
+  <div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <br><br>
+        <h1 class="header center teal-text text-lighten-2">DCE CONNECT</h1>
+        <div class="row center">
+          <h5 class="header col s12 light">A Tumblr Based Microblogging Website.</h5>
+        </div>
+        <div class="row center">
+          
+		<a class="waves-effect waves-light btn-large" href="/users/sign_in"><i class="material-icons left">account_circle </i>Login</a>
+    <a class="waves-effect waves-light btn-large" href="/users/sign_up"><i class="material-icons left" >account_box</i>Sign-up</a>
+
+
+       </div>
+       
+        <br><br>
+
+      </div>
+    </div>
+    <div class="parallax"><img src="http://localhost:3000/assets/background1.jpg" alt="Unsplashed background img 1"></div>
+  </div>
+
+
+  <div class="container">
+    <div class="section">
+
+      <!--   Icon Section   -->
+      <div class="row">
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center brown-text"><i class="material-icons">flash_on</i></h2>
+            <h5 class="center">Heading</h5>
+
+            <p class="light">Description</p>
+          </div>
+        </div>
+
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center brown-text"><i class="material-icons">group</i></h2>
+            <h5 class="center">Heading</h5>
+
+            <p class="light">Description</p>
+          </div>
+        </div>
+
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center brown-text"><i class="material-icons">settings</i></h2>
+            <h5 class="center">Heading</h5>
+
+            <p class="light">Description.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+ <footer class="page-footer teal">
+    <div class="footer-copyright">
+      <div class="container">
+      Made by <a class="brown-text text-lighten-3" href="http://materializecss.com">Priya</a>
+      </div>
+    </div>
+  </footer>
+
+  <% end %>
+</div>

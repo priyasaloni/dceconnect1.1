@@ -1,0 +1,60 @@
+<br>
+<% if @post.count <=0 %>
+	<h4 class="container"> No post In these categories </h4>
+	<% else %>
+<div class = "col s8 container" >
+
+		<div  style="flex-wrap: nowrap; text-align: left">
+			<a class="waves-effect waves-light btn-large" href="/static/welcome" data-turbolinks = "false" >Go back</a>
+		</div>
+				<%@post.reverse.each do |p| %>
+
+				<% if p.category_id == 1%>
+				<% color = "red" %>
+				<% elsif p.category_id == 2%>
+				<% color = "pink" %>
+				<% elsif p.category_id == 3%>
+				<% color = "blue" %>
+				<% elsif p.category_id == 4%>
+				<% color = "green" %>
+				<% elsif p.category_id == 5%>
+				<% color = "yellow" %>
+				<% else %>
+				<% color = "teal" %>
+				<%end%>
+
+				<% vote = Upvote.where(:user_id => @user.id , :post_id => p.id) %>
+
+				<div class = "row" style=" flex-wrap: wrap;">
+					<div class = "col s10 offset-s1">
+						<div class="card <%= color %>">
+							<div class = "row">
+								<img  class = "col s3" src = " <%= User.find(p.user_id).img %> " alt ="user-img" style="height:50px; width:80px">
+								<div class="col s3"><%= User.find(p.user_id).Name%></div>
+								<div class="col s3"><%= Category.find(p.category_id).name%> </div>
+								<div class="col s3" ><%= (p.created_at)%> </div>
+							</div>
+							<div class="card-content white-text">
+								<span class="card-title"> <b> <%= p.title%> </b></span>
+								<p> <%= p.content%> </p> <br> <br> 
+								<form method="post" action="/static/like_cat" name="welc_form">
+									<input type="hidden" name="uid" value="<%= @user.id%>">
+									<input type="hidden" name="cid" value="<%= p.category_id %>">
+									<input type="hidden" name="pid" value="<%= p.id%>">
+									<% if vote.exists? %>
+									<p> <input type="submit" class="btn waves-effect waves-light black" onclick="change()" type="submit" id="myButton1" value="Unlike"> </input> <%= p.nol %> Likes </p>
+									<% else %>
+									<p> <input type="submit" class="btn waves-effect waves-light black" onclick="change()" type="submit"  id="myButton1" value="Like"> </input> <%= p.nol %> Likes </p>
+									<% end %>
+								</form>
+							</div>     
+						</div>
+					</div>
+				</div>
+				<% end %>
+
+			<%end%>
+
+
+
+

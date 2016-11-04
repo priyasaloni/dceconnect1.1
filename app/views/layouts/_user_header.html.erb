@@ -1,0 +1,26 @@
+<ul class="nav nav-pills pull-right">
+
+  <% if user_signed_in? %>
+  <img src = "<%= current_user.img %> " alt ="user-img" style="height:50px; width:80px">
+    <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete, :class => 'btn btn-small btn-danger' %></li>
+  <% else %>
+    <li><%= link_to "Sign in", new_user_session_path %></li>
+    <li><%= link_to "Sign up", new_user_registration_path  %></li>
+    <button id ="facebook"><li id = "facebook-text"><%= link_to "Sign in with Facebook", '/users/auth/facebook' %></li></button>
+  <% end %>
+</ul>
+<style>
+#facebook{
+	margin-right: 10px;
+	padding: 0;
+	border-radius: 10px 10px 10px 10px;
+	color: white;
+	background-color: #3b5998;
+	box-shadow: none;
+}
+#facebook-text a{
+		color: white;
+	}
+
+
+</style>
